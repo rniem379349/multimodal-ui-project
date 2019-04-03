@@ -1,0 +1,7 @@
+Package           Version
+----------------- -------
+pip               19.0.3 
+PyAudio           0.2.11 
+setuptools        40.8.0 
+SpeechRecognition 3.8.1  
+wheel             0.33.1 
