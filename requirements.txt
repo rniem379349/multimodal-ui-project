@@ -12,3 +12,6 @@ PyTweening        1.0.3
 setuptools        40.8.0 
 SpeechRecognition 3.8.1  
 wheel             0.33.1 
+pytz              2018.9 
+zope.interface    4.6.0  
+DateTime          4.3    
