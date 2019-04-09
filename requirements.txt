@@ -1,7 +1,14 @@
 Package           Version
 ----------------- -------
+Pillow            6.0.0  
 pip               19.0.3 
 PyAudio           0.2.11 
+PyAutoGUI         0.9.42 
+PyGetWindow       0.0.4  
+PyMsgBox          1.0.6  
+PyRect            0.1.4  
+PyScreeze         0.1.20 
+PyTweening        1.0.3  
 setuptools        40.8.0 
 SpeechRecognition 3.8.1  
 wheel             0.33.1 

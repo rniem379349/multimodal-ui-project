@@ -11,21 +11,46 @@ def execute_voice_cmd(command):
 
 
 # functions for all the voice commands
-def hello():
-    pag.hotkey('ctrl','f')
+def toggle_recording():
+    pag.hotkey('alt','r')
 
-def world():
-    pag.typewrite('black guns')
+def toggle_microphone():
+    pag.hotkey('alt','n')
 
-def man():
-    pag.hotkey('enter')
+def toggle_system_sound():
+    pag.hotkey('alt','m')
+
+def screenshot():
+    pag.hotkey('alt','s')
+
+def switch_source():
+    pag.hotkey('alt','c')
+
+def switch_source_one():
+    pag.hotkey('alt','1')
+
+def switch_source_two():
+    pag.hotkey('alt','2')
+
+def switch_source_one_two():
+    pag.hotkey('alt','3')
+
+def switch_source_two_one():
+    pag.hotkey('alt','4')
+    
 
 
 # dictionary with the commands and their corresponding functions
 COMMANDS = {
-    'hello': hello, 
-    'world': world, 
-    'man': man
+    'toggle recording': toggle_recording, 
+    'toggle microphone': toggle_microphone, 
+    'toggle system sound': toggle_system_sound,
+    'screenshot': screenshot,
+    'switch to source one': switch_source_one,
+    'switch to source two': switch_source_two,
+    'switch to source 1 and 2': switch_source_one_two,
+    'switch to source 2 and 1': switch_source_two_one,
+    'switch source': switch_source
 }
 
 
