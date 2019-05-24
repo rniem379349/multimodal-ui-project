@@ -124,6 +124,22 @@ while(True):
     hands = hand_cascade.detectMultiScale(gray, 1.1, 10)
     faces = face_cascade.detectMultiScale(gray, 1.1, 5)
     
+    # print (cap.get(3)) # x dimension of frame
+    # print (cap.get(4)) # y dimension of frame
+
+    # print(hands)
+
+    for (x, y, w, h) in hands:
+        if len(faces) > 0:
+            print(x, cap.get(3)/2)
+            if x <= cap.get(3)/2:
+                print("Hand on the left")
+                switch_source_one()
+            elif x > cap.get(3)/2:
+                print("Hand on the right")
+                switch_source_two()
+
+
     shouldListen = False
     if video:
         for (x, y, w, h) in faces:
