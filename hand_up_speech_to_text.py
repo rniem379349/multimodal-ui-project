@@ -4,11 +4,13 @@ import speech_recognition as sr
 import pyautogui as pag
 import datetime
 import sys
+from pycaw.pycaw import AudioUtilities
 
 verbose = '--verbose' in sys.argv
 video = '--video' in sys.argv
 
 now = datetime.datetime.now()
+processNameForVolume = "LeagueClientUx.exe"
 
 def write_to_file(message):
     output = now.isoformat() + ": " + message + '\n'
@@ -57,6 +59,27 @@ def switch_source_two_one():
 def audio_test():
     pag.typewrite('DEBUG OK')
     
+def volume_up():
+    sessions = AudioUtilities.GetAllSessions()
+    for session in sessions:
+        volume = session.SimpleAudioVolume
+        if session.Process and session.Process.name() == processNameForVolume:
+            currentVolume = volume.GetMasterVolume();
+            if verbose:
+                print("Setting volume from", currentVolume, "to", min(1.0, currentVolume + 0.1))
+            volume.SetMasterVolume(min(1.0, currentVolume + 0.1), None)
+
+def volume_down():
+    sessions = AudioUtilities.GetAllSessions()
+    for session in sessions:
+        volume = session.SimpleAudioVolume
+        if session.Process:
+            print(session.Process.name())
+        if session.Process and session.Process.name() == processNameForVolume:
+            currentVolume = volume.GetMasterVolume();
+            if verbose:
+                print("Setting volume from", currentVolume, "to", max(0.0, currentVolume - 0.1))
+            volume.SetMasterVolume(max(0.0, currentVolume - 0.1), None)
 
 
 # dictionary with the commands and their corresponding functions
@@ -70,7 +93,9 @@ COMMANDS = {
     'switch to source 1 and 2': switch_source_one_two,
     'switch to source 2 and 1': switch_source_two_one,
     'switch source': switch_source,
-    'audio test': audio_test
+    'audio test': audio_test,
+    'volume up': volume_up,
+    'volume down': volume_down
 }
 
 if verbose:

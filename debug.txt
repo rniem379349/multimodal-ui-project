@@ -1,0 +1,10 @@
+2019-05-23T20:56:10.393434: Error in recognition
+2019-05-23T20:56:51.376196: volume up
+2019-05-23T20:56:51.376196: volume down
+2019-05-23T20:57:46.240635: volume up
+2019-05-23T20:57:46.240635: volume down
+2019-05-23T20:57:46.240635: Error in recognition
+2019-05-23T20:57:46.240635: toggle recording
+2019-05-23T20:57:46.240635: toggle recording
+2019-05-23T21:00:21.700145: toggle recording
+2019-05-23T21:00:21.700145: toggle recording
