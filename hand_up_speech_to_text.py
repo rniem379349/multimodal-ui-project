@@ -18,10 +18,10 @@ def write_to_file(message):
     f.write(output)
     f.close()
 
-def execute_voice_cmd(command):
+def execute_voice_cmd(command, *args, **kwargs):
     command_matcher = COMMANDS
     func = command_matcher.get(command, lambda: "Invalid command")
-    result = func()
+    result = func(*args, **kwargs)
     if result is None:
         write_to_file(command)
     if verbose:
@@ -29,37 +29,45 @@ def execute_voice_cmd(command):
 
 
 # functions for all the voice commands
-def toggle_recording():
+def toggle_recording(*args, **kwargs):
     pag.hotkey('alt','r')
 
-def toggle_microphone():
+def toggle_microphone(*args, **kwargs):
     pag.hotkey('alt','n')
 
-def toggle_system_sound():
+def toggle_system_sound(*args, **kwargs):
     pag.hotkey('alt','m')
 
-def screenshot():
+def screenshot(*args, **kwargs):
     pag.hotkey('alt','s')
 
-def switch_source():
-    pag.hotkey('alt','c')
+def switch_source(handOnTheLeft = None):
+    if handOnTheLeft == True:
+        print("hand on left")
+        pag.hotkey('alt','1')
+    elif handOnTheLeft == False:
+        print("hand on right")
+        pag.hotkey('alt','2')
+    else:
+        print("Sumthin else")
+        pag.hotkey('alt','c')
 
-def switch_source_one():
+def switch_source_one(*args, **kwargs):
     pag.hotkey('alt','1')
 
-def switch_source_two():
+def switch_source_two(*args, **kwargs):
     pag.hotkey('alt','2')
 
-def switch_source_one_two():
+def switch_source_one_two(*args, **kwargs):
     pag.hotkey('alt','3')
 
-def switch_source_two_one():
+def switch_source_two_one(*args, **kwargs):
     pag.hotkey('alt','4')
     
-def audio_test():
+def audio_test(*args, **kwargs):
     pag.typewrite('DEBUG OK')
     
-def volume_up():
+def volume_up(*args, **kwargs):
     sessions = AudioUtilities.GetAllSessions()
     for session in sessions:
         volume = session.SimpleAudioVolume
@@ -69,7 +77,7 @@ def volume_up():
                 print("Setting volume from", currentVolume, "to", min(1.0, currentVolume + 0.1))
             volume.SetMasterVolume(min(1.0, currentVolume + 0.1), None)
 
-def volume_down():
+def volume_down(*args, **kwargs):
     sessions = AudioUtilities.GetAllSessions()
     for session in sessions:
         volume = session.SimpleAudioVolume
@@ -129,31 +137,31 @@ while(True):
 
     # print(hands)
 
-    for (x, y, w, h) in hands:
-        if len(faces) > 0:
-            print(x, cap.get(3)/2)
-            if x <= cap.get(3)/2:
-                print("Hand on the left")
-                switch_source_one()
-            elif x > cap.get(3)/2:
-                print("Hand on the right")
-                switch_source_two()
-
-
+    handOnTheLeft = None # false - hand raised on the right side, true - left side
     shouldListen = False
     if video:
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
     for (x, y, w, h) in hands:
         toShow = True
+        print("x: " + str(x))
+        if x <= cap.get(3)/2:
+            print("Hand on the left")
+            handOnTheLeft = True
+        elif x > cap.get(3)/2:
+            print("Hand on the right")
+            handOnTheLeft = False
         for (_, y2, _, h2) in faces:
             if y2 < y + h / 2:
                 toShow = False
+
         if toShow and len(faces) > 0:
             if video:
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
             shouldListen = True
     
+    print("hand on the left? " + str(handOnTheLeft))
+
     if video:
         cv2.imshow('Frame', frame)
     
@@ -182,7 +190,7 @@ while(True):
                 print("Your command: " + voice_cmd)
 
             # try to execute the command
-            execute_voice_cmd(voice_cmd)
+            execute_voice_cmd(voice_cmd, handOnTheLeft)
 
             # exception handling
         except sr.UnknownValueError:
