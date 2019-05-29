@@ -10,7 +10,7 @@ verbose = '--verbose' in sys.argv
 video = '--video' in sys.argv
 
 now = datetime.datetime.now()
-processNameForVolume = "LeagueClientUx.exe"
+processNameForVolume = "LogiCapture.exe"
 
 def write_to_file(message):
     output = now.isoformat() + ": " + message + '\n'
@@ -20,7 +20,7 @@ def write_to_file(message):
 
 def execute_voice_cmd(command, *args, **kwargs):
     command_matcher = COMMANDS
-    func = command_matcher.get(command, lambda: "Invalid command")
+    func = command_matcher.get(command, lambda _: "Invalid command")
     result = func(*args, **kwargs)
     if result is None:
         write_to_file(command)
@@ -160,7 +160,6 @@ while(True):
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
             shouldListen = True
     
-    print("hand on the left? " + str(handOnTheLeft))
 
     if video:
         cv2.imshow('Frame', frame)
